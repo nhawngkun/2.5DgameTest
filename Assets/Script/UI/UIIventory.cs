@@ -69,7 +69,6 @@ public class UIIventory : UICanvas_SSMB
 
         if (_InventoryData == null) return;
 
-        Debug.Log($"[UIIventory] items.Count={_InventoryData.items.Count}, availableSlots={slots.Length}");
 
         int activeSlotIndex = 0;
         foreach (var item in _InventoryData.items)

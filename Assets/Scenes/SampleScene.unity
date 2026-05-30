@@ -3297,10 +3297,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapManager
   _MapConfigs:
   - MapId: 1
-    MapPrefab: {fileID: 4920492437395740421, guid: 7c31696891512ca448d8f997208f20fe, type: 3}
+    MapPrefabRef:
+      m_AssetGUID: 7c31696891512ca448d8f997208f20fe
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
   - MapId: 2
-    MapPrefab: {fileID: 7410712150974470754, guid: 933ca73cf48a57b4d93bf18081bf5a2c, type: 3}
-  _PlayerPrefab: {fileID: 9131298809913106536, guid: fda56787f9f5185498d80a1aabbbe25c, type: 3}
+    MapPrefabRef:
+      m_AssetGUID: 933ca73cf48a57b4d93bf18081bf5a2c
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  _PlayerPrefabRef:
+    m_AssetGUID: fda56787f9f5185498d80a1aabbbe25c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   _InitialMapId: 1
   _InitialPortalId: 1
   _currentMapId: 1
