@@ -119,8 +119,7 @@ public class VariableJoystick_SilkyWoods : MonoBehaviour, IDragHandler, IPointer
                 );
             }
 
-            if (showDebug && input != Vector2.zero)
-                Debug.Log($"[Joystick] Input: ({input.x:F2}, {input.y:F2})");
+           
         }
     }
 

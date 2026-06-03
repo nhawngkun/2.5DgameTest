@@ -142,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 9131298809913106536}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.66, y: 0.49400005, z: 4.41}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -169,7 +169,7 @@ MonoBehaviour:
   _Deceleration: 12
   _RunThreshold: 0.95
   _ChopRange: 1.6
-  _ChopAngle: 120
+  _ChopAngle: 50
   _ChopDamageDelay: 0.25
   _InventoryData: {fileID: 11400000, guid: 94a742e663b7cb942b3d7e3a16c87008, type: 2}
   _CollectRange: 1
@@ -180,6 +180,7 @@ MonoBehaviour:
   _CurrentSpeed: 0
   _InputDirection: {x: 0, y: 0}
   _LastMoveDirection: {x: 0, y: 0}
+  SpeedMultiplier: 1
 --- !u!54 &9108038953744934386
 Rigidbody:
   m_ObjectHideFlags: 0

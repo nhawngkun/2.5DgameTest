@@ -125,6 +125,11 @@ public class ChoppableTree : MonoBehaviour
     {
         isChopped = true;
 
+        if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.OnTreeChopped();
+        }
+
         if (wobbleCoroutine != null)
         {
             StopCoroutine(wobbleCoroutine);

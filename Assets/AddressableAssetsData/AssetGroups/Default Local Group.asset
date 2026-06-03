@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 91da1791e80f668499176c20011aae9f
   m_SerializeEntries:
+  - m_GUID: 2ae5f1cf91befe24b86f7aab7e9bc972
+    m_Address: Assets/prefab/thi tran.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7c31696891512ca448d8f997208f20fe
     m_Address: Assets/prefab/Map.prefab
     m_ReadOnly: 0
@@ -22,6 +27,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 933ca73cf48a57b4d93bf18081bf5a2c
     m_Address: Assets/prefab/Map (1).prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1c891c52f6502e4b8c65071fefc6bf9
+    m_Address: Assets/prefab/nong trai.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a751563c5033ec64ebf753d54683c063
+    m_Address: Assets/prefab/AI.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

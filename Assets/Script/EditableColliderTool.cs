@@ -1,4 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Common.Scripts
 {
@@ -124,7 +127,18 @@ namespace Common.Scripts
                 }
                 else
                 {
-                    DestroyImmediate(meshCollider.sharedMesh);
+#if UNITY_EDITOR
+                    Mesh oldMesh = meshCollider.sharedMesh;
+                    EditorApplication.delayCall += () =>
+                    {
+                        if (oldMesh != null)
+                        {
+                            DestroyImmediate(oldMesh);
+                        }
+                    };
+#else
+                    Destroy(meshCollider.sharedMesh);
+#endif
                 }
             }
         }

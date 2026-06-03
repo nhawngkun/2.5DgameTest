@@ -1,6 +1,4 @@
-// Assets/Editor/MapObject25DPlacer.cs
-// Cách dùng: Window → 2.5D Map Placer
-// Yêu cầu: Unity 2022+
+
 
 #if UNITY_EDITOR
 using UnityEngine;
@@ -559,7 +557,6 @@ public class MapObject25DPlacer : EditorWindow
         Repaint();
     }
 
-    // ── Apply offset to selection ─────────────────────────────────────────────
     private void ApplyOffsetToSelection()
     {
         if (Selection.gameObjects.Length == 0)
@@ -572,7 +569,6 @@ public class MapObject25DPlacer : EditorWindow
             go.transform.position += _posOffset;
     }
 
-    // ── Apply tilt to selection ───────────────────────────────────────────────
     private void ApplyTiltToSelection()
     {
         if (Selection.gameObjects.Length == 0)
@@ -590,7 +586,6 @@ public class MapObject25DPlacer : EditorWindow
         }
     }
 
-    // ── Undo helpers ─────────────────────────────────────────────────────────
     private void UndoLastPlaced()
     {
         for (int i = _placedObjects.Count - 1; i >= 0; i--)
@@ -605,7 +600,6 @@ public class MapObject25DPlacer : EditorWindow
         }
     }
 
-    // ── Utility ───────────────────────────────────────────────────────────────
     private void AddToRecent(GameObject prefab)
     {
         if (prefab == null) return;

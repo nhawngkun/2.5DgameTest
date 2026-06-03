@@ -141,8 +141,42 @@ public class SaveManager : MonoBehaviour
                         burnTimer = cf.BurnTimer
                     });
                 }
+                // Save AI NPC position
+                QuestNPC npc = mapGo.GetComponentInChildren<QuestNPC>(true);
+                mapData.ais = new List<AISaveData>();
+                if (npc != null)
+                {
+                    mapData.ais.Add(new AISaveData
+                    {
+                        aiId = "QuestNPC",
+                        position = new Vector3Save(npc.transform.position)
+                    });
+                }
 
                 data.mapStates.Add(mapData);
+            }
+
+            // Save Quests
+            data.questStates = new List<QuestSaveData>();
+            if (QuestManager.Instance != null)
+            {
+                foreach (var q in QuestManager.Instance.AllQuests)
+                {
+                    data.questStates.Add(new QuestSaveData
+                    {
+                        mapId = q.MapId,
+                        description = q.Description,
+                        type = q.Type,
+                        targetAmount = q.TargetAmount,
+                        currentAmount = q.CurrentAmount,
+                        isCompleted = q.IsCompleted,
+                        isAccepted = q.IsAccepted,
+                        startAmount = q.StartAmount,
+                        hasBeenIntroduced = q.HasBeenIntroduced,
+                        rewardMoney = q.RewardMoney,
+                        rewardClaimed = q.RewardClaimed
+                    });
+                }
             }
 
             string json = JsonUtility.ToJson(data, true);
@@ -188,6 +222,33 @@ public class SaveManager : MonoBehaviour
                 }
                 inv.money = data.money;
                 inv.AddMoney(0); 
+            }
+
+            if (QuestManager.Instance != null && data.questStates != null)
+            {
+                QuestManager.Instance.AllQuests.Clear();
+                foreach (var qs in data.questStates)
+                {
+                    QuestManager.Instance.AllQuests.Add(new ActiveQuest
+                    {
+                        MapId = qs.mapId,
+                        Description = qs.description,
+                        Type = qs.type,
+                        TargetAmount = qs.targetAmount,
+                        CurrentAmount = qs.currentAmount,
+                        IsCompleted = qs.isCompleted,
+                        IsAccepted = qs.isAccepted,
+                        StartAmount = qs.startAmount,
+                        HasBeenIntroduced = qs.hasBeenIntroduced,
+                        RewardMoney = qs.rewardMoney,
+                        RewardClaimed = qs.rewardClaimed
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(data.currentMapId))
+                {
+                    QuestManager.Instance.InitializeQuestForMap(data.currentMapId);
+                }
             }
 
             if (!string.IsNullOrEmpty(data.currentMapId))
@@ -291,6 +352,20 @@ public class SaveManager : MonoBehaviour
                     }
                 }
             }
+
+        }
+
+        if (mapSave.ais != null && mapSave.ais.Count > 0)
+        {
+            QuestNPC npc = mapInstance.GetComponentInChildren<QuestNPC>(true);
+            if (npc != null)
+            {
+                var aiData = mapSave.ais.Find(a => a.aiId == "QuestNPC");
+                if (aiData != null)
+                {
+                    npc.LoadPosition(aiData.position.ToVector3());
+                }
+            }
         }
     }
 
@@ -306,6 +381,22 @@ public class SaveManager : MonoBehaviour
 
 
 [System.Serializable]
+public class QuestSaveData
+{
+    public string mapId;
+    public string description;
+    public QuestType type;
+    public int targetAmount;
+    public int currentAmount;
+    public bool isCompleted;
+    public bool isAccepted;
+    public int startAmount;
+    public bool hasBeenIntroduced;
+    public int rewardMoney;
+    public bool rewardClaimed;
+}
+
+[System.Serializable]
 public class SaveData
 {
     public string currentMapId;
@@ -313,6 +404,7 @@ public class SaveData
     public List<InventoryItemSave> inventoryItems = new List<InventoryItemSave>();
     public int money;
     public List<MapSaveData> mapStates = new List<MapSaveData>();
+    public List<QuestSaveData> questStates = new List<QuestSaveData>();
 }
 
 [System.Serializable]
@@ -346,6 +438,7 @@ public class MapSaveData
     public List<TreeSaveData> trees = new List<TreeSaveData>();
     public List<WoodLootSaveData> woodLoots = new List<WoodLootSaveData>();
     public List<CampfireSaveData> campfires = new List<CampfireSaveData>();
+    public List<AISaveData> ais = new List<AISaveData>();
 }
 
 [System.Serializable]
@@ -367,5 +460,12 @@ public class TreeSaveData
 [System.Serializable]
 public class WoodLootSaveData
 {
+    public Vector3Save position;
+}
+
+[System.Serializable]
+public class AISaveData
+{
+    public string aiId;
     public Vector3Save position;
 }

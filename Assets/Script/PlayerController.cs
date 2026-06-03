@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _CurrentSpeed;
     [SerializeField] private Vector2 _InputDirection;
     [SerializeField] private Vector2 _LastMoveDirection;
+    [HideInInspector] public float SpeedMultiplier = 1f;
 
     private Rigidbody _Rigidbody;
 
@@ -205,16 +206,16 @@ public class PlayerController : MonoBehaviour
 
         if (hasInput)
         {
-            if (_CurrentSpeed < _MinSpeed)
-                _CurrentSpeed = _MinSpeed;
+            if (_CurrentSpeed < _MinSpeed * SpeedMultiplier)
+                _CurrentSpeed = _MinSpeed * SpeedMultiplier;
 
-            float targetMaxSpeed = _MaxSpeed;
+            float targetMaxSpeed = _MaxSpeed * SpeedMultiplier;
             if (_Joystick != null && Input.GetAxisRaw("Horizontal") == 0f && Input.GetAxisRaw("Vertical") == 0f)
             {
-                targetMaxSpeed = _MaxSpeed * Mathf.Clamp01(_InputDirection.magnitude);
-                if (targetMaxSpeed < _MinSpeed && _InputDirection.sqrMagnitude > 0f)
+                targetMaxSpeed = _MaxSpeed * SpeedMultiplier * Mathf.Clamp01(_InputDirection.magnitude);
+                if (targetMaxSpeed < _MinSpeed * SpeedMultiplier && _InputDirection.sqrMagnitude > 0f)
                 {
-                    targetMaxSpeed = _MinSpeed;
+                    targetMaxSpeed = _MinSpeed * SpeedMultiplier;
                 }
             }
 
@@ -448,9 +449,12 @@ public class PlayerController : MonoBehaviour
         if (_InventoryData != null)
         {
             _InventoryData.AddItem(ItemType.Wood, qty);
-           
+            
+            if (QuestManager.Instance != null)
+            {
+                QuestManager.Instance.OnWoodCollected();
+            }
 
-          
             UIGameplay gameplayUI = UIManager_SSMB.Instance != null ? UIManager_SSMB.Instance.GetUI<UIGameplay>() : null;
             gameplayUI?.PlayCollectFeedback($"+{qty} Gỗ");
         }

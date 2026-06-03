@@ -49,6 +49,7 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
     [SerializeField] private PanelConfig shopPanel;
     [SerializeField] private PanelConfig iventoryPanel;
     [SerializeField] private PanelConfig loadPanel;
+    [SerializeField] private PanelConfig questPanel;
 
     [Header("── Thời gian animation (giây) ────────")]
     [SerializeField] private float animTime = 0.5f;
@@ -69,6 +70,31 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
     public override void Awake()
     {
         base.Awake();
+
+        if (uiCanvases == null)
+        {
+            uiCanvases = new List<UICanvas_SSMB>();
+        }
+
+        // Try to get QuestUI from questPanel config first
+        QuestUI questUI = null;
+        if (questPanel != null && questPanel.canvasGroup != null)
+        {
+            questUI = questPanel.canvasGroup.GetComponent<QuestUI>();
+        }
+
+        // If not found in questPanel, try to find any in the scene
+        if (questUI == null)
+        {
+            questUI = FindAnyObjectByType<QuestUI>();
+        }
+
+        // Ensure registered in uiCanvases list
+        if (questUI != null && !uiCanvases.Contains(questUI))
+        {
+            uiCanvases.Add(questUI);
+        }
+
         InitializeUICanvases();
         CacheOriginalPositions();
     }
@@ -97,6 +123,9 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
         CacheY(gamplayPanel); CacheScale(gamplayPanel);
         CacheY(levelPanel); CacheScale(levelPanel);
         CacheY(shopPanel); CacheScale(shopPanel);
+        CacheY(iventoryPanel); CacheScale(iventoryPanel);
+        CacheY(loadPanel); CacheScale(loadPanel);
+        CacheY(questPanel); CacheScale(questPanel);
     }
 
     private void CacheScale(PanelConfig config)
@@ -117,7 +146,6 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
         }
     }
 
-    // ── Helper lấy UICanvas từ PanelConfig ──────────────────────────────────
 
     private UICanvas_SSMB GetUICanvas(PanelConfig config)
     {
@@ -125,7 +153,6 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
         return config.canvasGroup.GetComponent<UICanvas_SSMB>();
     }
 
-    // Shake thủ công (không cần DOTween Pro)
     private Sequence ShakeAnchorPos(RectTransform rt, float duration,
                                     float strengthX, float strengthY, int steps = 8)
     {
@@ -134,17 +161,16 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
         float stepTime = duration / steps;
         for (int i = 0; i < steps; i++)
         {
-            float progress = 1f - (float)i / steps;          // giảm dần về cuối
+            float progress = 1f - (float)i / steps;         
             float ox = Random.Range(-strengthX, strengthX) * progress;
             float oy = Random.Range(-strengthY, strengthY) * progress;
             s.Append(rt.DOAnchorPos(origin + new Vector2(ox, oy), stepTime)
                        .SetEase(Ease.Linear));
         }
-        s.Append(rt.DOAnchorPos(origin, stepTime * 0.5f));   // snap về gốc
+        s.Append(rt.DOAnchorPos(origin, stepTime * 0.5f));  
         return s;
     }
 
-    // ── Core animation ──────────────────────────────────────────────────────
 
     private void AnimatePanel(PanelConfig config, bool enable,
                               bool callSetup = true, bool callOpen = false,
@@ -423,6 +449,30 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
         AnimatePanel(levelPanel, enable, callSetup: true, callOpen: true);
     }
 
+    public bool IsQuestPanelConfigured()
+    {
+        return questPanel != null && questPanel.canvasGroup != null;
+    }
+
+    public void EnableQuestUI(bool enable)
+    {
+        if (IsQuestPanelConfigured())
+        {
+            AnimatePanel(questPanel, enable, callSetup: true, callOpen: true);
+        }
+        else
+        {
+            if (enable)
+            {
+                OpenUI<QuestUI>();
+            }
+            else
+            {
+                CloseUIDirectly<QuestUI>();
+            }
+        }
+    }
+
     public void EnableGameplay(bool enable)
     {
         if (gamplayPanel?.canvasGroup == null)
@@ -507,7 +557,7 @@ public class UIManager_SSMB : Singleton_SSMB<UIManager_SSMB>
         T canvas = GetUI<T>();
         if (canvas == null) return false;
         CanvasGroup cg = canvas.GetComponent<CanvasGroup>();
-        return cg != null && cg.alpha > 0f;
+        return cg != null && (cg.alpha > 0f || cg.blocksRaycasts);
     }
 
     public T GetUI<T>() where T : UICanvas_SSMB
