@@ -829,10 +829,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -14.45
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -935,6 +935,7 @@ GameObject:
   - component: {fileID: 410087041}
   - component: {fileID: 410087040}
   - component: {fileID: 410087042}
+  - component: {fileID: 410087043}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1051,6 +1052,118 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &410087043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410087039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b22395308d98ddb448e93deb4f90a16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DayNightCycle
+  TimeOfDay: 8
+  DayLengthInSeconds: 60
+  PauseTime: 0
+  DirectionalLight: {fileID: 410087040}
+  SunColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  AmbientColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  SunIntensityCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SpriteLightColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!1 &416960592
 GameObject:
   m_ObjectHideFlags: 0
@@ -4286,12 +4399,19 @@ MonoBehaviour:
   _MapConfigs:
   - MapId: 1
     MapPrefab: {fileID: 7767149955921899803, guid: 2ae5f1cf91befe24b86f7aab7e9bc972, type: 3}
+    MapVFX: {fileID: 1236953363384669671, guid: 921922bb6a20aa241ab10cf3369e809d, type: 3}
   - MapId: 2
     MapPrefab: {fileID: 4920492437395740421, guid: 7c31696891512ca448d8f997208f20fe, type: 3}
+    MapVFX: {fileID: 1951776419518861225, guid: d6b92dc96cc591a49ba6fa934bf5e930, type: 3}
   - MapId: 3
     MapPrefab: {fileID: 7207514131247982114, guid: a1c891c52f6502e4b8c65071fefc6bf9, type: 3}
+    MapVFX: {fileID: 1951776419518861225, guid: d6b92dc96cc591a49ba6fa934bf5e930, type: 3}
   - MapId: 4
     MapPrefab: {fileID: 7410712150974470754, guid: 933ca73cf48a57b4d93bf18081bf5a2c, type: 3}
+    MapVFX: {fileID: 1236953363384669671, guid: 921922bb6a20aa241ab10cf3369e809d, type: 3}
+  - MapId: 5
+    MapPrefab: {fileID: 1579252736244743073, guid: f5ed8c20752c1ff43b179de553ba8ac5, type: 3}
+    MapVFX: {fileID: 3671313986162146406, guid: 55ed4b31579a5c54d8ffba1a89c06f5a, type: 3}
   _PlayerPrefab: {fileID: 9131298809913106536, guid: fda56787f9f5185498d80a1aabbbe25c, type: 3}
   _QuestNpcPrefab: {fileID: 5240393053399197765, guid: a751563c5033ec64ebf753d54683c063, type: 3}
   _InitialMapId: 1
@@ -4357,6 +4477,11 @@ MonoBehaviour:
     Description: "Nhi\u1EC7m v\u1EE5 : ki\u1EBFm 100 ti\u1EC1n"
     Type: 2
     TargetAmount: 100
+    RewardMoney: 100
+  - MapId: 5
+    Description: "Nhi\u1EC7m v\u1EE5: Ch\u1EB7t \u0111\u1ED5 2 c\xE1i C\xE2y"
+    Type: 0
+    TargetAmount: 2
     RewardMoney: 100
   CurrentQuest:
     MapId: 

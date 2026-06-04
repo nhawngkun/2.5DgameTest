@@ -28,6 +28,7 @@ public class MapManager : MonoBehaviour
     {
         public string MapId;
         public GameObject MapPrefab;
+        public GameObject MapVFX;
     }
 
     [Header("Map Prefab Configurations")]
@@ -43,6 +44,7 @@ public class MapManager : MonoBehaviour
 
     private bool _isTransitioning = false;
     private Dictionary<string, GameObject> _instantiatedMaps = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> _instantiatedVFX = new Dictionary<string, GameObject>();
 
     public string CurrentMapId => _currentMapId;
     public GameObject CurrentMapInstance => _currentMapInstance;
@@ -59,6 +61,16 @@ public class MapManager : MonoBehaviour
             }
         }
         _instantiatedMaps.Clear();
+
+        foreach (var kvp in _instantiatedVFX)
+        {
+            if (kvp.Value != null)
+            {
+                Destroy(kvp.Value);
+            }
+        }
+        _instantiatedVFX.Clear();
+
         _currentMapInstance = null;
         _currentMapId = null;
     }
@@ -196,6 +208,14 @@ public class MapManager : MonoBehaviour
             }
         }
         _currentMapId = targetMapId;
+
+        UpdateMapVFX(targetMapId);
+        ActivateChildVFX(_currentMapInstance);
+
+        if (DayNightCycle.Instance != null)
+        {
+            DayNightCycle.Instance.RegisterMap(_currentMapInstance);
+        }
 
         await UniTask.Yield();
 
@@ -337,6 +357,71 @@ public class MapManager : MonoBehaviour
             if (result != null) return result;
         }
         return null;
+    }
+
+    private void UpdateMapVFX(string activeMapId)
+    {
+        foreach (var config in _MapConfigs)
+        {
+            if (config.MapVFX == null) continue;
+
+            bool isActiveMap = (config.MapId == activeMapId);
+
+            // Check if it is a scene object or a prefab asset
+            bool isSceneObject = config.MapVFX.scene.IsValid() && !string.IsNullOrEmpty(config.MapVFX.scene.name);
+
+            if (isSceneObject)
+            {
+                config.MapVFX.SetActive(isActiveMap);
+            }
+            else
+            {
+                // Prefab asset
+                if (isActiveMap)
+                {
+                    if (!_instantiatedVFX.TryGetValue(config.MapId, out GameObject vfxInstance) || vfxInstance == null)
+                    {
+                        vfxInstance = Instantiate(config.MapVFX);
+                        if (_currentMapInstance != null)
+                        {
+                            vfxInstance.transform.SetParent(_currentMapInstance.transform, false);
+                        }
+                        _instantiatedVFX[config.MapId] = vfxInstance;
+                    }
+                    vfxInstance.SetActive(true);
+                }
+                else
+                {
+                    if (_instantiatedVFX.TryGetValue(config.MapId, out GameObject vfxInstance) && vfxInstance != null)
+                    {
+                        vfxInstance.SetActive(false);
+                    }
+                }
+            }
+        }
+    }
+
+    private void ActivateChildVFX(GameObject mapInstance)
+    {
+        if (mapInstance == null) return;
+        FindAndActivateVFXTransforms(mapInstance.transform);
+    }
+
+    private void FindAndActivateVFXTransforms(Transform current)
+    {
+        if (current.name.ToUpper().Contains("VFX"))
+        {
+            current.gameObject.SetActive(true);
+            ParticleSystem[] particles = current.GetComponentsInChildren<ParticleSystem>(true);
+            foreach (var ps in particles)
+            {
+                ps.Play();
+            }
+        }
+        foreach (Transform child in current)
+        {
+            FindAndActivateVFXTransforms(child);
+        }
     }
 }
 

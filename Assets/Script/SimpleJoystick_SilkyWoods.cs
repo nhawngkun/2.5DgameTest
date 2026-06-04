@@ -13,7 +13,7 @@ public class VariableJoystick_SilkyWoods : MonoBehaviour, IDragHandler, IPointer
     public float deadZone = 0.1f;
 
     [Header("Animation")]
-    public float resetSpeed = 10f; // Tốc độ handle về giữa
+    public float resetSpeed = 10f; 
 
     private bool isResetting = false;
 

@@ -73,6 +73,15 @@ public class SaveManager : MonoBehaviour
 
             data.currentMapId = MapManager.Instance.CurrentMapId;
 
+            if (DayNightCycle.Instance != null)
+            {
+                data.timeOfDay = DayNightCycle.Instance.TimeOfDay;
+            }
+            else
+            {
+                data.timeOfDay = 8f;
+            }
+
             InventoryData inv = _InventoryData;
             if (inv == null && player != null)
             {
@@ -251,6 +260,11 @@ public class SaveManager : MonoBehaviour
                 }
             }
 
+            if (DayNightCycle.Instance != null)
+            {
+                DayNightCycle.Instance.TimeOfDay = data.timeOfDay;
+            }
+
             if (!string.IsNullOrEmpty(data.currentMapId))
             {
                 await MapManager.Instance.LoadMapSequenceAsync(data.currentMapId, null, data.playerPosition.ToVector3());
@@ -405,6 +419,7 @@ public class SaveData
     public int money;
     public List<MapSaveData> mapStates = new List<MapSaveData>();
     public List<QuestSaveData> questStates = new List<QuestSaveData>();
+    public float timeOfDay;
 }
 
 [System.Serializable]
