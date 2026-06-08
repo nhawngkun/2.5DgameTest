@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 3873930601789946275}
   m_Layer: 0
   m_Name: player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,7 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _Animator: {fileID: 3123745003274698992}
-  _Joystick: {fileID: 0}
   _MinSpeed: 2
   _MaxSpeed: 6
   _Acceleration: 8
@@ -171,9 +170,11 @@ MonoBehaviour:
   _ChopRange: 1.6
   _ChopAngle: 50
   _ChopDamageDelay: 0.25
-  _InventoryData: {fileID: 11400000, guid: 94a742e663b7cb942b3d7e3a16c87008, type: 2}
-  _CollectRange: 1
-  _CampfireRange: 2.5
+  _PerspectiveMode: 0
+  _TiltRotation25D: {x: 45, y: 0, z: 0}
+  _TiltRotation3D: {x: 0, y: 0, z: 0}
+  _RotateToMoveDirection3D: 1
+  _AnimatorDirection3D: {x: 0, y: -1}
   _IsWalk: 0
   _IsRun: 0
   _IsCut: 0
@@ -181,6 +182,10 @@ MonoBehaviour:
   _InputDirection: {x: 0, y: 0}
   _LastMoveDirection: {x: 0, y: 0}
   SpeedMultiplier: 1
+  _Joystick: {fileID: 0}
+  _InventoryData: {fileID: 11400000, guid: 94a742e663b7cb942b3d7e3a16c87008, type: 2}
+  _CollectRange: 1
+  _CampfireRange: 2.5
 --- !u!54 &9108038953744934386
 Rigidbody:
   m_ObjectHideFlags: 0

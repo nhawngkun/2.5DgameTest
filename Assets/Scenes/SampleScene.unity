@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0ca16e1b5a77646af0b2045f00b06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
-  target: {fileID: 0}
+  target: {fileID: 6128977448244375563, guid: 52b2196d8a2b6674d95388b8ad183ea4, type: 3}
   offset: {x: -1.96, y: 4.65, z: -3.55}
   smoothSpeed: 8
   useBoundsClamping: 1
@@ -4412,7 +4412,7 @@ MonoBehaviour:
   - MapId: 5
     MapPrefab: {fileID: 1579252736244743073, guid: f5ed8c20752c1ff43b179de553ba8ac5, type: 3}
     MapVFX: {fileID: 3671313986162146406, guid: 55ed4b31579a5c54d8ffba1a89c06f5a, type: 3}
-  _PlayerPrefab: {fileID: 9131298809913106536, guid: fda56787f9f5185498d80a1aabbbe25c, type: 3}
+  _PlayerPrefab: {fileID: 7525251934470117729, guid: 52b2196d8a2b6674d95388b8ad183ea4, type: 3}
   _QuestNpcPrefab: {fileID: 5240393053399197765, guid: a751563c5033ec64ebf753d54683c063, type: 3}
   _InitialMapId: 1
   _InitialPortalId: 1
